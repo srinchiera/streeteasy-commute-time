@@ -72,7 +72,7 @@ function cache_display(elm) {
   var origin = origin_from_elm(elm);
   encoded_origin = encodeURIComponent(origin)
   $.ajax({
-    url: 'http://localhost/' + encoded_origin,
+    url: config['cache-server'] + encoded_origin,
     dataType: 'json',
     error: function(jqXHR, textStatus, errorThrown) {
       console.log("Error retrieving data from cache server!");
