@@ -3,6 +3,10 @@
   "description": "Shows transit time on street easy.",
   "version": "0.1",
   "manifest_version": 2,
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
   "content_scripts": [{
     "matches": [
       "*://streeteasy.com/for-rent/*",
@@ -11,7 +15,7 @@
     "js": ["config.js", "jquery.js", "main.js"],
     "run_at": "document_end"
   }],
-  "permissions": ["https://maps.googleapis.com/*"],
+  "permissions": ["activeTab", "https://maps.googleapis.com/*", "http://localhost/*"],
   "browser_action": {
       "default_title": "Print this page"
       //TODO
