@@ -16,8 +16,7 @@ function format_origin(origin) {
 function origin_from_elm(elm) {
   /* Given DOM element of listing details, return origin */
 
-  var origin = $(elm).find('a').text();
-  return format_origin(origin);
+  return $(elm).find('a').text();
 }
 
 function append_time_to_elm(elm, time) {
@@ -52,7 +51,8 @@ function google_api_call(elm, data) {
 function google_api_display(elm) {
   /* Dispalys result from Google Maps API call to DOM */
 
-  var origin = origin_from_elm(elm);
+  var unformatted_origin = origin_from_elm(elm);
+  var origin = format_origin(unformatted_origin);
 
   var data = {
     'key': config['api_key'],
@@ -66,18 +66,18 @@ function google_api_display(elm) {
   google_api_call(elm, data);
 }
 
-function redis_display(elm) {
-  /* Displays result from redis server to DOM */
+function cache_display(elm) {
+  /* Displays result from cache server to DOM */
 
   var origin = origin_from_elm(elm);
   encoded_origin = encodeURIComponent(origin)
   $.ajax({
     url: 'http://localhost/' + encoded_origin,
+    dataType: 'json',
     error: function(jqXHR, textStatus, errorThrown) {
-      console.log("Error retrieving data from Redis server!");
+      console.log("Error retrieving data from cache server!");
       console.log(errorThrown);
     },
-    dataType: 'json',
     success: function(data, textStatus, jgXHR) {
       if (data['status'] == 'success') {
         append_time_to_elm(elm, data['time']);
@@ -89,7 +89,7 @@ function redis_display(elm) {
 }
 
 function display_time(elm) {
-  redis_display(elm);
+  cache_display(elm);
 }
 
 display_times();
