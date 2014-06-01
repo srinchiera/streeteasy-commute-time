@@ -82,7 +82,7 @@ function cache_display(elm, origin) {
     dataType: 'json',
     error: function(jqXHR, textStatus, errorThrown) {
       console.log("Error retrieving data from cache server!");
-      console.log(errorThrown);
+      google_api_display(elm, origin);
     },
     success: function(data, textStatus, jgXHR) {
       if (data['status'] == 'success') {
