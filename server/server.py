@@ -14,6 +14,7 @@ class RedisHandler(SocketServer.BaseRequestHandler):
     def __init__(self, *args, **keys):
         self._conn = redis.StrictRedis(host=self.host)
         SocketServer.BaseRequestHandler.__init__(self, *args, **keys) 
+
     def handle(self):
         ''' If address in DB, return it, otherwise send not found status '''
 

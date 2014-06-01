@@ -1,10 +1,11 @@
 function display_times() {
   /* Displays travel time next to all listings */
 
-  var details_list = $('.details h5');
+  var address_elm_list = $('.details h5');
+  var neighborhood_elm_list = $('.details_info a');
 
-  for (var i = 0; i < details_list.length; i++) {
-    display_time(details_list[i]);
+  for (var i = 0; i < address_elm_list.length; i++) {
+    display_time(address_elm_list[i], neighborhood_elm_list[i]);
   }
 }
 
@@ -13,10 +14,16 @@ function format_origin(origin) {
   return origin + ', New York, New York';
 }
 
-function origin_from_elm(elm) {
+function address_from_elm(elm) {
   /* Given DOM element of listing details, return origin */
 
   return $(elm).find('a').text();
+}
+
+function neighborhood_from_elm(elm) {
+  /* Given DOM element of listing details, return origin */
+
+  return $(elm).text();
 }
 
 function append_time_to_elm(elm, time) {
@@ -48,11 +55,10 @@ function google_api_call(elm, data) {
   });
 }
 
-function google_api_display(elm) {
+function google_api_display(elm, origin) {
   /* Dispalys result from Google Maps API call to DOM */
 
-  var unformatted_origin = origin_from_elm(elm);
-  var origin = format_origin(unformatted_origin);
+  var origin = format_origin(origin);
 
   var data = {
     'key': config['api_key'],
@@ -66,13 +72,13 @@ function google_api_display(elm) {
   google_api_call(elm, data);
 }
 
-function cache_display(elm) {
+function cache_display(elm, origin) {
   /* Displays result from cache server to DOM */
 
-  var origin = origin_from_elm(elm);
-  encoded_origin = encodeURIComponent(origin)
+  encoded_origin = encodeURIComponent(origin);
+
   $.ajax({
-    url: config['cache-server'] + encoded_origin,
+    url: config['cache-server'] + '/' + encoded_origin,
     dataType: 'json',
     error: function(jqXHR, textStatus, errorThrown) {
       console.log("Error retrieving data from cache server!");
@@ -82,14 +88,20 @@ function cache_display(elm) {
       if (data['status'] == 'success') {
         append_time_to_elm(elm, data['time']);
       } else {
-        google_api_display(elm);
+        google_api_display(elm, origin);
       }
     }
   });
 }
 
-function display_time(elm) {
-  cache_display(elm);
+function display_time(address_elm, neighborhood_elm) {
+
+  var address = address_from_elm(address_elm);
+  var neighborhood = neighborhood_from_elm(neighborhood_elm);
+
+  var origin = address + " " + neighborhood;
+
+  cache_display(address_elm, origin);
 }
 
 display_times();
