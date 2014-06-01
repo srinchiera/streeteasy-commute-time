@@ -96,10 +96,14 @@ function cache_display(elm, origin) {
 
 function display_time(address_elm, neighborhood_elm) {
 
-  var address = address_from_elm(address_elm);
+  var origin = address_from_elm(address_elm);
   var neighborhood = neighborhood_from_elm(neighborhood_elm);
+  var borough = neighborhood_map[neighborhood];
 
-  var origin = address + " " + neighborhood;
+  // Concat neighborhood to avoid ambiguities
+  if (borough != undefined) {
+    var origin = origin + ' ' + borough;
+  }
 
   cache_display(address_elm, origin);
 }
