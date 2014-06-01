@@ -3,10 +3,12 @@
   "description": "Shows transit time on street easy.",
   "version": "0.1",
   "manifest_version": 2,
+  /*
   "background": {
     "scripts": ["background.js"],
     "persistent": false
   },
+  */
   "content_scripts": [{
     "matches": [
       "*://streeteasy.com/for-rent/*",
