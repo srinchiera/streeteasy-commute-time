@@ -23,7 +23,6 @@ function display_time(address_elm, neighborhood_elm) {
 
   var useCache = config["use-cache"];
 
-  alert(config["mode"]);
   if (config["mode"] == "transit") {
     transitModule.display_time(address_elm, origin, useCache);
   } else {

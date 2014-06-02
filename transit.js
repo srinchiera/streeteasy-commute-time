@@ -56,7 +56,6 @@ var transitModule = (function(){
         if (data['status'] == 'success') {
           append_time_to_elm(elm, data['time']);
         } else {
-          alert('failed this');
           google_api_display(elm, origin);
         }
       }
