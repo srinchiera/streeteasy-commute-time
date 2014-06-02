@@ -88,6 +88,7 @@ function cache_display(elm, origin) {
       if (data['status'] == 'success') {
         append_time_to_elm(elm, data['time']);
       } else {
+        alert('failed this');
         google_api_display(elm, origin);
       }
     }
@@ -95,6 +96,7 @@ function cache_display(elm, origin) {
 }
 
 function display_time(address_elm, neighborhood_elm) {
+  /* Displays individual commute time next to the address */
 
   var origin = address_from_elm(address_elm);
   var neighborhood = neighborhood_from_elm(neighborhood_elm);
@@ -105,7 +107,20 @@ function display_time(address_elm, neighborhood_elm) {
     var origin = origin + ' ' + borough;
   }
 
-  cache_display(address_elm, origin);
+  if (config["use-cache"]) {
+    cache_display(address_elm, origin);
+  } else {
+    google_api_display(address_elm, origin);
+  }
 }
 
-display_times();
+chrome.storage.sync.get(["mode", "destination", "cache-server", "use-cache"], function(storageObj) {
+  /* Check if user set options and put them in config */
+
+  config["mode"]         = storageObj["mode"] || config["mode"];
+  config["destination"]  = storageObj["destination"] || config["destination"];
+  config["cache-server"] = storageObj["cache-server"] || config["cache-server"];
+  config["use-cache"]    = storageObj["use-cache"] || false;
+
+  display_times();
+});

@@ -15,9 +15,10 @@
     "js": ["config.js", "neighborhood_map.js", "jquery.js", "main.js"],
     "run_at": "document_end"
   }],
-  "permissions": ["activeTab", "https://maps.googleapis.com/*", "http://localhost/*"],
+  "permissions": ["storage", "activeTab", "https://maps.googleapis.com/*", "http://localhost/*"],
   "browser_action": {
-      "default_title": "StreetEasy Transit Time"
+      "default_title": "StreetEasy Transit Time",
+      "default_popup": "popup.html"
       //TODO
       //"default_icon": ""
   }

@@ -1,0 +1,27 @@
+<html>
+<head>
+  <title>Options for Color Chooser</title>
+</head>
+<body>
+  <h3>Mode of Transportation</h3>
+  <select id="mode">
+    <option value="transit">Transit</option>
+    <option value="driving">Driving</option>
+    <option value="bicycling">Bicycling</option>
+    <option value="walking">Walking</option>
+  </select>
+  <br />
+  <h3>Destination</h3>
+  <input id="destination" type="text" name="destination">
+  <br />
+  <h3>Cache Server</h3>
+  <input id="cache-server" type="text" disabled="disabled" />
+  <input id="use-cache" type="checkbox" name="use-cache">Use cache<br>
+  <br />
+  <button id="save">Save</button>
+
+  <script type="text/javascript" src="config.js"></script>
+  <script type="text/javascript" src="jquery.js"></script>
+  <script type="text/javascript" src="popup.js"></script>
+</body>
+</html>
