@@ -12,7 +12,12 @@
       "*://streeteasy.com/for-rent/*",
       "*://streeteasy.com/for-sale/*"
     ],
-    "js": ["config.js", "neighborhood_map.js", "jquery.js", "main.js"],
+    "js": [ "jquery.js",
+            "config.js",
+            "utils.js",
+            "neighborhood_map.js",
+            "transit.js",
+            "main.js" ],
     "run_at": "document_end"
   }],
   "permissions": ["storage", "activeTab", "https://maps.googleapis.com/*", "http://localhost/*"],

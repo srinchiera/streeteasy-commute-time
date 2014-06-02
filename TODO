@@ -1,5 +1,7 @@
-Instead of calling google_api_call on failure, we may want to add it to a queue. We can have a function execute at some interval popping off addresses according to our rate limit and making queries. This way we don't unnecessarily query the Google API past our limit.
+Instead of calling google_api_call on failure, we may want to add it to a queue. We can have a function execute at some interval popping off addresses according to our rate limit and making queries. This way we don't unnecessarily query the Google API past our limit. This will also make them go in order.
 
 Support calls to the cache with multiple addresses
 
 Add support for driving / walking / biking
+
+Prettify dropdown menu
