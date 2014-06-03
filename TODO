@@ -5,3 +5,5 @@ Support calls to the cache with multiple addresses
 Add support for driving / walking / biking
 
 Prettify dropdown menu
+
+Send requests to cache server all at once

@@ -6,6 +6,7 @@ import SocketServer
 import urllib
 import json
 from config import Config
+from transit import Transit
 
 class RedisHandler(SocketServer.BaseRequestHandler):
     """
@@ -17,6 +18,7 @@ class RedisHandler(SocketServer.BaseRequestHandler):
     def __init__(self, *args, **keys):
         self._conn = redis.StrictRedis(host=self.host)
         self._config = Config()
+        selfe._transit = Transit(self._conn, self._config)
         SocketServer.BaseRequestHandler.__init__(self, *args, **keys)
 
     def handle(self):
@@ -48,32 +50,25 @@ class RedisHandler(SocketServer.BaseRequestHandler):
 
         self.request.close()
 
-    def add_address(self, addr):
-        ''' Add address to redis database. '''
+    def add_address(self, address, mode):
+        ''' Caches and returns commute time for a single address
 
-        base_url = 'https://maps.googleapis.com/maps/api/directions/json'
-        formatted_addr = re.sub('#.*?(?:\s+|$)', '', addr) + ', New York, New York'
-        params = {
-                'key': self._config.api_key,
-                'origin': formatted_addr,
-                'destination': self._config.destination,
-                'sensor': False,
-                'mode': 'transit',
-                'arrival_time': '1401109200',
-        }
+            address_list: Addresses for which to calculate commute time.
+            mode: Type of travel. One of transit, driving, bicycling, walking
+        '''
 
-        # Loop API call until success
-        while True:
-            try:
-                r = requests.get(base_url, params = params)
-                route_time = r.json()['routes'][0]['legs'][0]['duration']
-                time_text = route_time['text']
-                self._conn.set(addr, time_text)
-                return time_text
+        if mode == 'transit':
+            return self._transit.add_address(address)
 
-            except Exception as e:
-                print e
-                time.sleep(1)
+    def add_addresses(self, address_list, mode):
+        ''' Caches and returns commute time for a list of addresses
+
+            address_list: List of addresses for which to calculate commute time.
+            mode: Type of travel. One of transit, driving, bicycling, walking
+        '''
+
+        if mode == 'transit':
+            return self._transit.add_addresses(address_list)
 
 host, port = "localhost", 80
 server = SocketServer.TCPServer((host, port), RedisHandler)
