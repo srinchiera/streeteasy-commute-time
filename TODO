@@ -3,3 +3,5 @@ Instead of calling google_api_call on failure, we may want to add it to a queue.
 Prettify dropdown menu
 
 Account for limits on the Google Matrix API
+
+Enable support on other StreetEasy pages

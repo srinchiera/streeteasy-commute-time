@@ -47,7 +47,12 @@ class RedisHandler(BaseHTTPServer.BaseHTTPRequestHandler, object):
                 self.send_response(200)
                 self.send_header("Content-type", "text/json")
                 self.end_headers()
-                self.wfile.write(json.dumps({ "time": time_list, "status": "success" }))
+
+                # If we returned a status code then there is a problem
+                if type(time_list) == list:
+                    self.wfile.write(json.dumps({ "time": time_list, "status": "success" }))
+                else:
+                    self.wfile.write(json.dumps({ "status": time_list , "status": "error" }))
 
         elif path[0] == 'info':
             self.send_response(200)

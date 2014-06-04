@@ -29,8 +29,18 @@ class GoogleDistanceMatrixAPI(object):
                 'mode': mode,
         }
 
-        r = requests.get(base_url, params = params)
-        rows = r.json()['rows']
-        time_text  = map(lambda x: x['elements'][0]['duration']['text'], rows)
+        # Loop API call until success
+        while True:
+            r = requests.get(base_url, params = params).json()
 
-        return time_text
+            try:
+                rows = r['rows']
+                time_text  = map(lambda x: x['elements'][0]['duration']['text'], rows)
+                return time_text
+
+            except Exception as e:
+                if r['status'] == 'OVER_QUERY_LIMIT':
+                    time.sleep(1)
+                else:
+                    return r['status']
+
