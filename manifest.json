@@ -16,7 +16,7 @@
             "main.js" ],
     "run_at": "document_end"
   }],
-  "permissions": ["storage", "activeTab", "https://maps.googleapis.com/*", "http://localhost/*"],
+  "permissions": ["storage", "activeTab", "*://localhost/*", "http://*/", "https://*/"],
   "browser_action": {
       "default_title": "StreetEasy Transit Time",
       "default_popup": "popup.html"

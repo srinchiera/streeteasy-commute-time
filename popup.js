@@ -1,7 +1,7 @@
 $('#save').click(function() {
   /* Persist options and close window */
 
-  window.close();
+  //window.close();
   saveOptions();
 });
 
@@ -50,6 +50,18 @@ function saveOptions() {
   };
 
   chrome.storage.sync.set(storageData, function() { getServerName(cacheServer) });
+
+  /*
+   * TODO shold we request permissions? One more button to click...
+  var permissions = { origins: [cacheServer] };
+  chrome.permissions.contains(permissions, function(has_permissions) {
+    console.log(has_permissions);
+    if (!has_permissions) {
+      chrome.permissions.request(permissions, function() {});
+    }
+  });
+  */
+
 }
 
 loadOptions();
