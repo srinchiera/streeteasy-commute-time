@@ -54,7 +54,5 @@ var commuteModule = (function(){
 
       cache_display_list(elm_list, origin_list);
     }
-
   }
-
 })();

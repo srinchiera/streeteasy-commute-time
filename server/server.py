@@ -1,7 +1,5 @@
 import redis
-import sys
 import urllib
-from urlparse import parse_qs
 import json
 import BaseHTTPServer
 from cgi import parse_header, parse_multipart
@@ -23,7 +21,7 @@ class RedisHandler(BaseHTTPServer.BaseHTTPRequestHandler, object):
     def do_GET(self):
         path = self.path.split('/')[1:]
 
-        modes = ['driving', 'bicycling', 'walking']
+        modes = ['transit', 'driving', 'bicycling', 'walking']
 
         if path[0] in modes:
             mode = path[0]
@@ -51,6 +49,12 @@ class RedisHandler(BaseHTTPServer.BaseHTTPRequestHandler, object):
                 self.end_headers()
                 self.wfile.write(json.dumps({ "time": time_list, "status": "success" }))
 
+        elif path[0] == 'info':
+            self.send_response(200)
+            self.send_header("Content-type", "text/json")
+            self.end_headers()
+            self.wfile.write(json.dumps({ "info": self._config.server_name, "status": "success" }))
+
         else:
             pass
 
@@ -66,6 +70,6 @@ class RedisHandler(BaseHTTPServer.BaseHTTPRequestHandler, object):
         else:
             return self._distance_matrix_api.add_address_list(address)
 
-server_address = ('', int(sys.argv[1]))
+server_address = ('', 80)
 httpd = BaseHTTPServer.HTTPServer(server_address, RedisHandler)
 httpd.serve_forever()

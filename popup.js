@@ -2,8 +2,25 @@ $('#save').click(function() {
   /* Persist options and close window */
 
   saveOptions();
-  window.close();
 });
+
+function getServerName(cacheServer) {
+  $.ajax({
+    url: cacheServer + '/info',
+    dataType: 'json',
+    error: function(jqXHR, textStatus, errorThrown) {
+      console.log("Error retrieving data from cache server!");
+      $('#server-name').text('Error retrieving data from cache server');
+    },
+    success: function(data, textStatus, jgXHR) {
+      if (data['status'] == 'success') {
+        $('#server-name').text(data['info']);
+      } else {
+        $('#server-name').text('Error retrieving server name');
+      }
+    }
+  });
+}
 
 function loadOptions() {
   /* Sets popup based on users preferences, defaulting to config */
@@ -16,6 +33,7 @@ function loadOptions() {
       $("#mode").val(mode);
       $('#cache-server').val(cacheServer);
 
+      getServerName(cacheServer);
   });
 }
 
@@ -30,7 +48,7 @@ function saveOptions() {
     'cache-server' : cacheServer
   };
 
-  chrome.storage.sync.set(storageData, function() {});
+  chrome.storage.sync.set(storageData, function() { getServerName(cacheServer) });
 }
 
 loadOptions();

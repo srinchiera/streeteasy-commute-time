@@ -1,6 +1,4 @@
 var config = {
-  'api-key'      : 'API KEY', // Google API
-  'destination'  : 'DESTINATION', // Destination address
-  'mode'         : 'transit', // default mode
-  'cache-server' : 'http://localhost' // URL to query for cached addresses
+  'mode'         : 'transit', // One of ['transit', 'driving', 'bicycling', 'walking']
+  'cache-server' : 'http://localhost' // URL of server
 }
