@@ -74,7 +74,3 @@ class RedisHandler(BaseHTTPServer.BaseHTTPRequestHandler, object):
             return self._distance_api.add_address(address)
         else:
             return self._distance_matrix_api.add_address_list(address)
-
-server_address = ('', 80)
-httpd = BaseHTTPServer.HTTPServer(server_address, RedisHandler)
-httpd.serve_forever()
