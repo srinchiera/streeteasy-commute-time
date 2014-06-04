@@ -16,7 +16,7 @@
             "config.js",
             "utils.js",
             "neighborhood_map.js",
-            "transit.js",
+            "commute.js",
             "main.js" ],
     "run_at": "document_end"
   }],
