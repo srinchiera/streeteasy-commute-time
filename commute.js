@@ -26,11 +26,8 @@ var commuteModule = (function(){
     /* Displays result from cache server to DOM */
 
     $.ajax({
-      url: config['cache-server'] + '/' + config['mode'],
+      url: config['cache-server'] + '/' + config['mode'] + '/' + origins.join('|'),
       dataType: 'json',
-      traditional:true,
-      type: 'post',
-      data: { 'origins' :  origins },
       error: function(jqXHR, textStatus, errorThrown) {
         console.log("Error retrieving data from cache server!");
         error_elm_list(elm_list);
