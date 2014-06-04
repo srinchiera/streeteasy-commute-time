@@ -1,6 +1,7 @@
 $('#save').click(function() {
   /* Persist options and close window */
 
+  window.close();
   saveOptions();
 });
 
