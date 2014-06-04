@@ -1,7 +1,6 @@
 from config import Config
 import requests
 import re
-from pprint import pprint
 
 class GoogleDistanceMatrixAPI(object):
     ''' Responsible for calculating commute time using Distance Matrix API '''

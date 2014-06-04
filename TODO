@@ -7,3 +7,5 @@ Account for limits on the Google Matrix API
 Enable support on other StreetEasy pages
 
 Server should be able to run arbitraryly hosted Redis database
+
+Logging
